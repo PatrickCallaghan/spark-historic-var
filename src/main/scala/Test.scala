@@ -16,11 +16,11 @@ trait UsersSparkJob extends spark.jobserver.SparkJob with spark.jobserver.NamedR
 object HistoricVar extends UsersSparkJob {
 
   override def runJob(sc: SparkContext, config: Config) = {
-	  val rdd = sc.cassandraTable("datastax_creditcard_demo", "latest_transactions").cache
+	  val interactionsRdd = sc.cassandraTable("datastax_user_interactions_demo", "user_interactions").cache
 
-	  println("Latest Transactions : " + rdd.collect.size);
+	  println("User Interactions : " + interactionsRdd.collect.size);
 	  
-	  rdd.collect.size;
+	  interactionsRdd.collect.size;
   }
 }
 
