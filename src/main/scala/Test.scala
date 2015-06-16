@@ -8,8 +8,7 @@ import org.apache.spark.rdd.RDD
 import com.typesafe.config.Config
 
 trait UsersSparkJob extends spark.jobserver.SparkJob with spark.jobserver.NamedRddSupport  {
-  val rddName = "users"
-
+  
   // Validation is not really needed in this example
   def validate(sc: SparkContext, config: Config): spark.jobserver.SparkJobValidation = spark.jobserver.SparkJobValid
 }
@@ -17,11 +16,11 @@ trait UsersSparkJob extends spark.jobserver.SparkJob with spark.jobserver.NamedR
 object HistoricVar extends UsersSparkJob {
 
   override def runJob(sc: SparkContext, config: Config) = {
-	  val interactionsRdd = sc.cassandraTable("datastax_user_interactions_demo", "user_interactions").cache
+	  val rdd = sc.cassandraTable("datastax_creditcard_demo", "latest_transactions").cache
 
-	  println("User Interactions : " + interactionsRdd.collect.size);
+	  println("Latest Transactions : " + rdd.collect.size);
 	  
-	  interactionsRdd.collect.size;
+	  rdd.collect.size;
   }
 }
 
