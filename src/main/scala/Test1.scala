@@ -16,9 +16,11 @@ trait UsersSparkJob1 extends spark.jobserver.SparkJob with spark.jobserver.Named
 object HistoricVar1 extends UsersSparkJob {
 
   override def runJob(sc: SparkContext, config: Config) = {
+    
+      println("Getting data from cache");
 	  val interactionsRdd = this.namedRdds.get[UserInteraction]("dictionary").get
 
-	  println("User Interactions : " + interactionsRdd.collect.size);
+	  println("User Interactions : " + interactionsRdd.count);
 	  
 	  interactionsRdd.collect;
   }
